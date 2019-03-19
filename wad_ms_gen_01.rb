@@ -108,16 +108,22 @@ module MS_Game
 
 				while invalidcoordinates do
 					system "cls"
+					# Display game header
 					displayplayerscores
 					displaycurrentframe
 					@output.puts "Total mines remaining: #{@totalminesremaining}"
+
+					# Display who's turn
 					@output.puts "#{player}'s turn"
 					@output.puts "Enter a coordinate to uncover if mine found."
+
+					# Ask for coordinates of field
 					@output.puts "Enter row number (0-5)"
 					xcoordinate = getinput.to_i
 					@output.puts "Enter column number (0-6)"
 					ycoordinate = getinput.to_i
 					
+					# Validate coordinate input
 					if (xcoordinate < 0 || xcoordinate > 5)
 						@output.puts "This is an invalid selection"
 						getinput
@@ -139,12 +145,15 @@ module MS_Game
 					invalidcoordinates = false
 				end
 
+				# Register user choice to check later if anyone has checked that filed yet
 				@checkedfields.push(xcoordinate.to_s + ycoordinate.to_s)
 
+				# Get value of that field and display for the users
 				value = getcolumnvalue(xcoordinate, ycoordinate)
 
 				@output.puts value
 
+				# User friendly message for either case of field value
 				if value === "M"
 					# Reduce the number of remaining mines
 					@totalminesremaining = @totalminesremaining - 1
@@ -248,14 +257,6 @@ module MS_Game
 		def displaywinner(p)
 			@output.puts "Player #{p} wins."
 		end
-		
-		def setplayer1
-			@output.puts "Please enter player 1's name: "
-			playername = getinput
-			@player1 = playername
-		end
-		
-
 
 		def initialgamesetup
 			# Setup players
@@ -270,6 +271,12 @@ module MS_Game
 							
 			# Set and place mines on game board
 			generateandplacemines
+		end
+		
+		def setplayer1
+			@output.puts "Please enter player 1's name: "
+			playername = getinput
+			@player1 = playername
 		end
 
 		def setplayer2
