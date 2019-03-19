@@ -29,61 +29,10 @@ module MS_Game
 		# Clear the screen
 			system "cls"
 		# Out put messsages for the players
-			# Display initial message for users
-			initialgamemessage
-
-			userselection = getinput.to_i
-
-			# Until user selects 9 roll on playing
-			until userselection == 9 do
-
-				# Ensure user only inputs a valid option
-				unless (userselection == 1 || userselection == 2 || userselection == 9)
-					@output.puts "Invalid selection, please amend your selection to a valid option."
-					userselection = getinput.to_i
-					next
-				end
-			
-				# if user selects resume game check if a game is set up by checking if any players are set
-				if userselection == 1
-					if !getplayer1
-						system "cls"
-						@output.puts nogametoresumemessage
-						displaymenu
-						userselection = getinput.to_i
-						next
-					else
-						winner = 0
-						resetscores
-						@totalminesremaining = @maxtotalmines
-						startgame
-					end
-				end
-
-				# If user selects a new game then set up a new game
-				if userselection == 2
-					@output.puts setupmessage
-					initialgamesetup
-					@output.puts displaynewgamecreated
-				end
-				
-				startgame
-				system "cls"
-
-				displaymenu
-				userselection = getinput.to_i
-			end
-
-			@output.puts "Thanks for playing, see you soon."
-
+			@output.puts getbegingame
 		end
 		
 		def startgame
-					
-			@output.puts displaybegingame
-
-			system "cls"
-
 			# Display playfield
 			# displayemptyframe			
 			@checkedfields = []
@@ -191,17 +140,13 @@ module MS_Game
 			return "There is no ongoing game to resume please set up a new one."
 		end
 
-		def checkcoordinates(x, y)
-
-		end
-
 		def initialgamemessage
-			@output.puts "Welcome to Minesweeper!"
-			@output.puts "Created by:#{created_by}"
-			@output.puts "Rules: \r\n"
-			@output.puts explain_rules
-			@output.puts "\r\n\r\n"
-			@output.puts displaymenu
+			return "Welcome to Minesweeper!\n  
+				Created by:#{created_by}\n
+				Rules: \r\n
+					#{explain_rules} 
+				\r\n\r\n
+					#{displaymenu}"
 		end
 
 		def setupmessage
@@ -212,20 +157,28 @@ module MS_Game
 			return "This game is played by two people and the player who finds the most mines wins the game."
 		end
 		
-		def displaybegingame
-			@output.puts "Let the games begin"
+		def getbegingame
+			return "Let the games begin"
 		end
 		
-		def displaynewgamecreated
-			@output.puts "New game created."
+		def getnewgamecreated
+			return "New game created."
 		end
 		
 		def finish
 			@output.puts "Game finished."
 		end
+
+		def getmessagefinish
+			return "Game finished."
+		end
 		
 		def displaymenu
 			@output.puts "Menu: (1)Resume | (2)New | (9)Exit\n"
+		end
+
+		def getmenu
+			return "Menu: (1)Resume | (2)New | (9)Exit\n"
 		end
 		
 		def clearscores
@@ -237,17 +190,33 @@ module MS_Game
 		def displayplayerscores
 			@output.puts "Player 1: #{resulta} and Player 2: #{resultb}"
 		end
+
+		def getplayerscores
+			return "Player 1: #{resulta} and Player 2: #{resultb}"
+		end
 		
 		def displayplayer1prompt
 			@output.puts "Player 1 to enter coordinate (0 returns to menu)."
+		end
+
+		def getplayer1prompt
+			return "Player 1 to enter coordinate (0 returns to menu)."
 		end
 		
 		def displayplayer2prompt
 			@output.puts "Player 2 to enter coordinate (0 returns to menu)."
 		end
+
+		def getplayer2prompt
+			return "Player 2 to enter coordinate (0 returns to menu)."
+		end
 		
 		def displayinvalidinputerror
 			@output.puts "Invalid input."
+		end
+
+		def getinvalidinputerror
+			return "Invalid input."
 		end
 		
 		def displaynomoreroomerror
@@ -258,10 +227,14 @@ module MS_Game
 			@output.puts "Player #{p} wins."
 		end
 
-		def initialgamesetup
+		def getnwinner(p)
+			return "Player #{p} wins."
+		end
+
+		def initialgamesetup(player1, player2)
 			# Setup players
-			setplayer1
-			setplayer2
+			setplayer1(player1)
+			setplayer2(player2)
 
 			# Reset scores
 			resetscores
@@ -273,16 +246,20 @@ module MS_Game
 			generateandplacemines
 		end
 		
-		def setplayer1
-			@output.puts "Please enter player 1's name: "
-			playername = getinput
-			@player1 = playername
+		def promptforplayer1sname
+			return "Please enter player 1's name: "
 		end
 
-		def setplayer2
-			@output.puts "Please enter player 2's name: "
-			playername = getinput
-			@player2 = playername
+		def promptforplayer2sname
+			return "Please enter player 2's name: "
+		end
+
+		def setplayer1(player1)
+			@player1 = player1
+		end
+
+		def setplayer2(player2)
+			@player2 = player2
 		end
 		
 		def getplayer1
@@ -340,6 +317,9 @@ module MS_Game
 				@output.puts "#{rowDfull}"
 				@output.puts "#{rowEfull}"
 				@output.puts "#{rowFfull}"
+
+			# Return for web based game
+			return "#{title}\n#{rowAfull}\n#{rowBfull}\n#{rowCfull}\n#{rowDfull}\n#{rowEfull}\n#{rowFfull}\n"
 			end
 
 		def displayemptyframe
@@ -352,7 +332,7 @@ module MS_Game
 			rowEempty = "4|_|_|_|_|_|_|_|"
 			rowFempty = "5|_|_|_|_|_|_|_|"
 			
-		# Output the graphics	
+		# Output the graphics for console game
 			@output.puts "#{title}"
 
 			@output.puts "#{rowAempty}"
@@ -361,6 +341,9 @@ module MS_Game
 			@output.puts "#{rowDempty}"
 			@output.puts "#{rowEempty}"
 			@output.puts "#{rowFempty}"
+
+		# Return graphics for web based game
+			return "#{title}\n#{rowAempty}\n#{rowBempty}\n#{rowCempty}\n#{rowDempty}\n#{rowEempty}\n#{rowFempty}\n"
 		end
 		
 		def generateandplacemines
@@ -388,7 +371,7 @@ module MS_Game
 					setmatrixcolumnvalue(row, col, "M")
 					counter = counter + 1 
 				end		
-				getinput
+				# getinput
 		end
 		
 		def checkwinner
