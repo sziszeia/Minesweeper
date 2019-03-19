@@ -393,6 +393,9 @@ module MS_Game
 			if @resultb > @resulta
 				return @player2
 			end
+			if @resulta == @resultb
+				return "This is a tie. Both of you win."
+			end
 		end
 		
 		# Any code/methods aimed at passing the RSpect tests should be added above.
