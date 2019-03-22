@@ -1,0 +1,118 @@
+body { 
+    font-family: Arial; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    background-color: lightgray;
+}
+
+a {
+    text-decoration: none;
+}
+
+.rightfloat {
+    float: right;
+}
+
+.homepage-links {
+    text-decoration: none;
+    color: white;
+}
+
+div.main_container {
+    background-color: rgb(40, 107, 252);
+}
+
+div.page_title { 
+    text-align: center;
+    background-color: orangered;
+}
+
+div.navbar {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    background-color: black;
+    color: white;
+}
+
+header {
+    height: 100px;
+    padding-bottom: 50px;
+}
+
+div.view_content {
+    min-height:250px;
+    padding: 5%;
+} 
+
+div.navbar-left {
+    float: left;
+    padding: 10px;
+}
+
+div.navbar-right {
+    float: right;
+    padding: 10px;
+}
+
+div.content {
+    background-color:#E9D7E8;
+    width:500;
+    float:left;
+    padding: 10px;
+}
+
+.playerarea {
+    padding: 50px;
+    margin: auto;
+    color: black;
+    align-content: center;
+    text-align: center;
+}
+
+.playerarea1 {
+    background-color:#EEEEEE;
+    padding: 50px;
+    margin: auto;
+    float: left;
+    color: black;
+    align-content: center;
+    text-align: center;
+}
+
+.playerarea2 {
+    background-color:#EEEEEE;
+    padding: 50px;
+    margin: auto;
+    float: right;
+    color: black;
+    align-content: center;
+    text-align: center;
+}
+
+.gamearea {
+    background-color:#EEEEEE;
+    padding: 50px;
+    margin: auto;
+    float: right;
+    color: black;
+    align-content: center;
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+  }
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }

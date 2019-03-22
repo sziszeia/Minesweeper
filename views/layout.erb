@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="This is my new Wiki app" />
+    <meta name="keywords" content="wiki, test app, blog"/>
+    <link rel="stylesheet" href="/style.css" type="text/css" />
+ <title>Mynd sweeper</title>
+</head> 
+<body>
+    <div class="main_container">
+        <header>
+        <div class="page_title"> 
+            <h1>Mynd Sweeper</h1><br> 
+        </div>
+        <div class="navbar"> 
+            <div class="navbar-left">
+                <a class="homepage-links" href="/">Home |</a>
+                <a class="homepage-links" href="/gamearena">Start new game |</a>
+                <a class="homepage-links" href="/about">About |</a> 
+                <a class="homepage-links" href="/quit">Quit |</a>          
+            </div>
+        </div>        
+        </header>
+        <div class="view_content">
+             <%= yield %>
+        </div>
+        <footer>
+            <p>Created by Szilvia E Horvath</p>
+        </footer>
+    </div>
+</body>
+
+    

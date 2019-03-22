@@ -107,7 +107,30 @@ end
 	# Any code added to output the activity messages to a browser should be added below.
 	get '/' do
 		@message = $webgame.initialgamemessage
+		@createdby = $webgame.created_by + " - " + $webgame.student_id.to_s
 		erb :index
+	end
+
+	get '/gamearena' do
+		$webgame.resetscores
+
+		# Clear the game field
+		$webgame.clearcolumns
+						
+		# Set and place mines on game board
+		#$webgame.generateandplacemines
+
+		@gamearea = $webgame.displaycurrentframe
+		erb :gamearena
+	end
+
+	get '/about' do
+		@rules = $webgame.explain_rules
+		erb :about
+	end
+
+	get '/quit' do
+		erb :goodbyepage
 	end
 
 

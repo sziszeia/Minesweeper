@@ -58,8 +58,9 @@ module MS_Game
 				while invalidcoordinates do
 					system "cls"
 					# Display game header
+					@output.puts "Scores: "
 					displayplayerscores
-					displaycurrentframe
+					displaygameboard
 					@output.puts "Total mines remaining: #{@totalminesremaining}"
 
 					# Display who's turn
@@ -100,7 +101,9 @@ module MS_Game
 				# Get value of that field and display for the users
 				value = getcolumnvalue(xcoordinate, ycoordinate)
 
-				@output.puts value
+				# @output.puts value
+
+				updategameboard(xcoordinate, ycoordinate)
 
 				# User friendly message for either case of field value
 				if value === "M"
@@ -241,6 +244,7 @@ module MS_Game
 
 			# Clear the game field
 			clearcolumns
+			cleargameboard
 							
 			# Set and place mines on game board
 			generateandplacemines
@@ -298,9 +302,53 @@ module MS_Game
 			end
 		end
 		
+		def cleargameboard
+			@gamematrix = []
+			@gamematrix[0] = ["_", "_", "_", "_", "_", "_","_"]
+			@gamematrix[1] = ["_", "_", "_", "_", "_", "_","_"]
+			@gamematrix[2] = ["_", "_", "_", "_", "_", "_","_"]
+			@gamematrix[3] = ["_", "_", "_", "_", "_", "_","_"]
+			@gamematrix[4] = ["_", "_", "_", "_", "_", "_","_"]
+			@gamematrix[5] = ["_", "_", "_", "_", "_", "_","_"]
+			@gamematrix[6] = ["_", "_", "_", "_", "_", "_","_"]
+		end
+
+		def updategameboard(row, column)
+			corematrixfieldvalue = getcolumnvalue(row, column)
+			if corematrixfieldvalue === "M"
+				@gamematrix[row][column] = "M"
+			else
+				@gamematrix[row][column] = "X"
+			end
+		end
+
+		def displaygameboard
+
+			# Create a basic graphical user interface for the game field
+			title = "  0 1 2 3 4 5 6 "
+			rowAfull = "0|#{@gamematrix[0][0]}|#{@gamematrix[0][1]}|#{@gamematrix[0][2]}|#{@gamematrix[0][3]}|#{@gamematrix[0][4]}|#{@gamematrix[0][5]}|#{@gamematrix[0][6]}|"
+			rowBfull = "1|#{@gamematrix[1][0]}|#{@gamematrix[1][1]}|#{@gamematrix[1][2]}|#{@gamematrix[1][3]}|#{@gamematrix[1][4]}|#{@gamematrix[1][5]}|#{@gamematrix[1][6]}|"
+			rowCfull = "2|#{@gamematrix[2][0]}|#{@gamematrix[2][1]}|#{@gamematrix[2][2]}|#{@gamematrix[2][3]}|#{@gamematrix[2][4]}|#{@gamematrix[2][5]}|#{@gamematrix[2][6]}|"
+			rowDfull = "3|#{@gamematrix[3][0]}|#{@gamematrix[3][1]}|#{@gamematrix[3][2]}|#{@gamematrix[3][3]}|#{@gamematrix[3][4]}|#{@gamematrix[3][5]}|#{@gamematrix[3][6]}|"
+			rowEfull = "4|#{@gamematrix[4][0]}|#{@gamematrix[4][1]}|#{@gamematrix[4][2]}|#{@gamematrix[4][3]}|#{@gamematrix[4][4]}|#{@gamematrix[4][5]}|#{@gamematrix[4][6]}|"
+			rowFfull = "5|#{@gamematrix[5][0]}|#{@gamematrix[5][1]}|#{@gamematrix[5][2]}|#{@gamematrix[5][3]}|#{@gamematrix[5][4]}|#{@gamematrix[5][5]}|#{@gamematrix[5][6]}|"
+			
+			# Output the graphics	
+			@output.puts "#{title}"
+
+			@output.puts "#{rowAfull}"
+			@output.puts "#{rowBfull}"
+			@output.puts "#{rowCfull}"
+			@output.puts "#{rowDfull}"
+			@output.puts "#{rowEfull}"
+			@output.puts "#{rowFfull}"
+
+
+		end
+
 		def displaycurrentframe
 			# Create a basic graphical user interface for the game field
-				title = "  0 1 2 3 4 5 6 "
+				title = "+  0 1 2 3 4 5 6 "
 				rowAfull = "0|#{matrix[0][0]}|#{matrix[0][1]}|#{matrix[0][2]}|#{matrix[0][3]}|#{matrix[0][4]}|#{matrix[0][5]}|#{matrix[0][6]}|"
 				rowBfull = "1|#{matrix[1][0]}|#{matrix[1][1]}|#{matrix[1][2]}|#{matrix[1][3]}|#{matrix[1][4]}|#{matrix[1][5]}|#{matrix[1][6]}|"
 				rowCfull = "2|#{matrix[2][0]}|#{matrix[2][1]}|#{matrix[2][2]}|#{matrix[2][3]}|#{matrix[2][4]}|#{matrix[2][5]}|#{matrix[2][6]}|"
@@ -319,7 +367,7 @@ module MS_Game
 				@output.puts "#{rowFfull}"
 
 			# Return for web based game
-			return "#{title}\n#{rowAfull}\n#{rowBfull}\n#{rowCfull}\n#{rowDfull}\n#{rowEfull}\n#{rowFfull}\n"
+			return "#{title}<br/>#{rowAfull}<br/>#{rowBfull}<br/>#{rowCfull}<br/>#{rowDfull}<br/>#{rowEfull}<br/>#{rowFfull}<br/>"
 			end
 
 		def displayemptyframe
@@ -343,7 +391,7 @@ module MS_Game
 			@output.puts "#{rowFempty}"
 
 		# Return graphics for web based game
-			return "#{title}\n#{rowAempty}\n#{rowBempty}\n#{rowCempty}\n#{rowDempty}\n#{rowEempty}\n#{rowFempty}\n"
+			return "#{title}\r\n#{rowAempty}\n#{rowBempty}\n#{rowCempty}\n#{rowDempty}\n#{rowEempty}\n#{rowFempty}\n"
 		end
 		
 		def generateandplacemines
