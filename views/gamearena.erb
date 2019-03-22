@@ -1,16 +1,52 @@
-
-<div class="playerarea">
-    <div class="playerarea1"> 
-    Player1 <br/>
-    Score:
-    
-    </div>
-    <div class="playerarea2">
-    Player2 <br/>
-    Score:
-    </div>
+<div>
+    <h2>
+        <% if @winner == nil%>
+        Total remaining mines: <span class="minescount"><%=@totalminesremaining%></span><br/>
+        This is <%=$playerturn%>'s turn
+        <% end %>
+        <% if @winner%>
+        <span class="winner">The winner is: <%=@winner[0]%></span>
+        <% end %>
+    <h2>
+    <% if $invalidcoordinates%>
+        <h2 class="error">Invalid input</h2>
+    <% end %>
+    <% if $winner%>
+        <h1>The winner is: <%=$winner%></h1>
+    <% end %>
 </div>
+<div class="gamearena">
+    <div class="playerarea1"> 
+        Player1:  <%=$player1[0]%><br/>
+        Score: <%=@resulta%><br/><br/>
 
-<div class="gamearea">
-Game
+        <% if $playerturn == $player1[0]%>
+        Please enter a row number<br/> and a column number below:
+        <form action="/processwebuserturn" method="post">
+        <input type="hidden" value="<%=$player1%>" name="player">
+        row:<input type="text" size="1" name="row"><br>
+        col:<input type="text" size="1" name="col"><br>
+        <input type="submit" value="Go!">
+        </form>
+        <% end %>
+    </div>
+
+    <div class="playerarea2">
+        Player2:  <%=$player2[0]%><br/>
+        Score: <%=@resultb%><br/><br/>
+
+        <% if $playerturn == $player2[0]%>
+        Please enter a row number<br/> and a column number below:
+        <form action="/processwebuserturn" method="post">
+        <input type="hidden" value="<%=$player2%>" name="player">
+        row:<input type="text" size="1" name="row"><br>
+        col:<input type="text" size="1" name="col"><br>
+        <input type="submit" value="Go!">
+        </form>
+        <% end %>
+    </div>
+
+    <div class="gamearea">
+        <%=@gamearea%>
+    </div>
 </div>

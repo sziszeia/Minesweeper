@@ -32,9 +32,11 @@ module MS_Game
 			@output.puts getbegingame
 		end
 		
-		def startgame
-			# Display playfield
-			# displayemptyframe			
+		def webgamesetup
+			@totalminesremaining = @maxtotalmines
+		end
+
+		def startgame		
 			@checkedfields = []
 			@totalminesremaining = @maxtotalmines
 
@@ -54,6 +56,8 @@ module MS_Game
 		def processuserturn(player)
 			begin
 				invalidcoordinates = true
+
+				@playerturn = player
 
 				while invalidcoordinates do
 					system "cls"
@@ -222,6 +226,10 @@ module MS_Game
 			return "Invalid input."
 		end
 		
+		def getcheckfields
+			return @checkedfields
+		end
+
 		def displaynomoreroomerror
 			@output.puts "No more room."
 		end
@@ -230,14 +238,25 @@ module MS_Game
 			@output.puts "Player #{p} wins."
 		end
 
-		def getnwinner(p)
+		def displaywinner(p)
 			return "Player #{p} wins."
+		end
+
+		def getnwinner
+			return @winner
+		end
+
+		def getplayerturn
+			return @playerturn
 		end
 
 		def initialgamesetup(player1, player2)
 			# Setup players
 			setplayer1(player1)
 			setplayer2(player2)
+
+			# Reset turn
+			@playerturn = nil
 
 			# Reset scores
 			resetscores
@@ -274,6 +293,30 @@ module MS_Game
 			return @player2
 		end
 		
+		def getresulta
+			return @resulta
+		end
+
+		def getresultb
+			return @resultb
+		end
+
+		def setresulta(score)
+			@resulta = score
+		end
+
+		def setresultb(score)
+			@resultb = score
+		end
+
+		def gettotalminesremaining
+			return @totalminesremaining
+		end
+
+		def settotalminesremaining(num)
+			@totalminesremaining = num
+		end
+
 		def resetscores
 			@resulta = 0
 			@resultb = 0
@@ -343,7 +386,7 @@ module MS_Game
 			@output.puts "#{rowEfull}"
 			@output.puts "#{rowFfull}"
 
-
+			return "+ #{title}<br/>#{rowAfull}<br/>#{rowBfull}<br/>#{rowCfull}<br/>#{rowDfull}<br/>#{rowEfull}<br/>#{rowFfull}<br/>"
 		end
 
 		def displaycurrentframe

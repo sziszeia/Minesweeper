@@ -74,7 +74,6 @@ div.content {
 }
 
 .playerarea1 {
-    background-color:#EEEEEE;
     padding: 50px;
     margin: auto;
     float: left;
@@ -84,7 +83,6 @@ div.content {
 }
 
 .playerarea2 {
-    background-color:#EEEEEE;
     padding: 50px;
     margin: auto;
     float: right;
@@ -94,25 +92,27 @@ div.content {
 }
 
 .gamearea {
-    background-color:#EEEEEE;
     padding: 50px;
     margin: auto;
-    float: right;
     color: black;
     align-content: center;
     text-align: center;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: #2196F3;
-    padding: 10px;
-  }
-  .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
-    text-align: center;
-  }
+.gamearena {
+    background-color: azure;
+}
+
+.minescount {
+    color: red;
+    font-size: 45px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.winner {
+    color: white;
+}

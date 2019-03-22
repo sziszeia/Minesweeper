@@ -112,16 +112,95 @@ end
 	end
 
 	get '/gamearena' do
-		$webgame.resetscores
 
-		# Clear the game field
-		$webgame.clearcolumns
-						
-		# Set and place mines on game board
-		#$webgame.generateandplacemines
+		# Set all variables for the game
+		@gamearea = $webgame.displaygameboard
+		$player1 = $webgame.getplayer1
+		$player2 = $webgame.getplayer2
+		@resulta = $webgame.getresulta
+		@resultb = $webgame.getresultb
+		@totalminesremaining = $webgame.gettotalminesremaining
 
-		@gamearea = $webgame.displaycurrentframe
+		if $playerturn == nil
+			$playerturn = $player1[0]
+		end
+
+		if @totalminesremaining == 0
+			$winner = $webgame.checkwinner
+			$playerturn = nil
+		end
+
 		erb :gamearena
+	end
+
+	post '/newgamesetup' do
+		$player1 = [params[:player1]]
+		$player2 = [params[:player2]]
+		$webgame.initialgamesetup($player1, $player2)
+		$checkedfileds = []
+		$winner = nil
+		$webgame.webgamesetup
+		redirect '/gamearena'
+	end
+
+	post '/processwebuserturn' do
+		@player = [params[:player]][0]
+		@row = [params[:row]][0].to_i
+		@col = [params[:col]][0].to_i
+		$invalidcoordinates = true
+
+		while $invalidcoordinates do
+			if (@row < 0 || @row > 5)
+				redirect '/gamearena'
+				next
+			end
+
+			if (@col < 0 || @col > 6)
+				redirect '/gamearena'
+				next
+			end
+
+			if $checkedfileds.include?(@row.to_s + @col.to_s)
+				redirect '/gamearena'
+				next
+			end
+
+			$invalidcoordinates = false
+		end
+
+		$checkedfileds.push(@row.to_s + @col.to_s)
+
+		# Update game board
+		$webgame.updategameboard(@row, @col)
+
+		# Get value of that field and display for the users
+		value = $webgame.getcolumnvalue(@row, @col)
+
+		# User friendly message for either case of field value
+		if value === "M"
+			# Reduce the number of remaining mines
+			$webgame.settotalminesremaining($webgame.gettotalminesremaining - 1)
+
+			# Increase the score of the appropriate player
+			if $playerturn === $player1[0]
+				$webgame.setresulta($webgame.getresulta + 1)
+			else
+				$webgame.setresultb($webgame.getresultb + 1)
+			end
+		end
+
+		# Change player turn
+		if $playerturn == $player1[0]
+			$playerturn = $player2[0]
+		else
+			$playerturn = $player1[0]
+		end
+
+		redirect '/gamearena'
+	end
+
+	get '/setupgame' do
+		erb :setupgame
 	end
 
 	get '/about' do
@@ -130,6 +209,8 @@ end
 	end
 
 	get '/quit' do
+		$player1 = nil
+		$player2 = nil
 		erb :goodbyepage
 	end
 
