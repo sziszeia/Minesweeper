@@ -79,7 +79,7 @@ module MS_Game
 					
 					# Validate coordinate input
 					if (xcoordinate < 0 || xcoordinate > 5)
-						@output.puts "This is an invalid selection"
+						@output.puts "This is an invalid selection "
 						getinput
 						next
 					end
